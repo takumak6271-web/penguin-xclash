@@ -383,6 +383,10 @@ function onClear(){
   nb.style.display=cur<19?'':'none';
   spawnConfetti();
   setTimeout(()=>document.getElementById('winOverlay').classList.add('show'),500);
+  setTimeout(()=>{
+    document.getElementById('winOverlay').classList.remove('show');
+    if(cur<19)showGame(cur+1);else showTitle();
+  },3000);
 }
 function resetLevel(){init(cur);}
 
