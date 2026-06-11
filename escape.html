@@ -94,7 +94,16 @@ const penguinImgs=penguinSrcs.map(s=>{const i=new Image();i.src=s;return i;});
 
 // ==================== レベル ====================
 const levels=[
-  {nodes:[{x:250,y:55},{x:110,y:180},{x:390,y:180},{x:250,y:295},{x:110,y:430},{x:390,y:430}],exitNode:0,penguins:[3],monkey:5,edges:[[0,1],[0,2],[1,3],[2,3],[3,4],[4,5],[2,5]]},{nodes:[{x:250,y:50},{x:120,y:180},{x:380,y:180},{x:120,y:330},{x:380,y:330},{x:120,y:460},{x:380,y:460}],exitNode:0,penguins:[4],monkey:6,edges:[[0,1],[0,2],[1,2],[1,3],[2,4],[3,4],[3,5],[4,6],[5,6],[1,4],[2,3]]},{nodes:[{x:250,y:45},{x:115,y:160},{x:390,y:155},{x:115,y:290},{x:390,y:290},{x:250,y:275},{x:115,y:415},{x:390,y:415}],exitNode:0,penguins:[3,4],monkey:7,edges:[[0,1],[1,2],[2,3],[3,4],[4,5],[5,6],[6,7],[1,5],[2,4],[3,7]]},{nodes:[{x:250,y:50},{x:105,y:170},{x:395,y:170},{x:105,y:300},{x:250,y:275},{x:395,y:300},{x:105,y:430},{x:395,y:430}],exitNode:0,penguins:[2,5],monkey:7,edges:[[0,1],[0,2],[1,3],[1,4],[2,4],[2,5],[3,4],[4,5],[3,6],[5,7],[6,7],[4,7],[4,6]]},{nodes:[{x:250,y:45},{x:105,y:165},{x:395,y:165},{x:105,y:295},{x:250,y:270},{x:395,y:295},{x:105,y:420},{x:395,y:420},{x:250,y:475}],exitNode:0,penguins:[2,5],monkey:8,edges:[[0,1],[0,2],[1,3],[1,4],[2,4],[2,5],[3,4],[4,5],[3,6],[5,7],[6,7],[4,8],[6,8],[7,8],[1,5]]},{nodes:[{x:250,y:40},{x:100,y:155},{x:400,y:155},{x:55,y:275},{x:250,y:250},{x:445,y:275},{x:55,y:390},{x:250,y:370},{x:445,y:390}],exitNode:0,penguins:[3,5],monkey:8,edges:[[0,1],[0,2],[1,3],[2,4],[3,5],[4,5],[5,6],[5,7],[6,8],[7,8],[1,5],[2,6],[3,7]]},{nodes:[{x:250,y:40},{x:105,y:150},{x:395,y:150},{x:60,y:270},{x:250,y:245},{x:440,y:270},{x:105,y:375},{x:395,y:375},{x:105,y:475},{x:395,y:475}],exitNode:0,penguins:[4,7],monkey:9,edges:[[0,1],[0,2],[1,3],[1,4],[2,4],[2,5],[3,6],[4,6],[4,7],[5,7],[3,8],[6,8],[7,9],[5,9],[8,9],[6,9]]},{nodes:[{x:250,y:40},{x:100,y:155},{x:400,y:155},{x:55,y:275},{x:250,y:250},{x:445,y:275},{x:55,y:390},{x:250,y:370},{x:445,y:390},{x:250,y:480}],exitNode:0,penguins:[2,5,7],monkey:9,edges:[[0,1],[0,2],[1,3],[1,4],[2,4],[2,5],[3,6],[4,7],[5,8],[6,7],[7,8],[6,9],[8,9],[3,5],[7,9]]},{nodes:[{x:250,y:38},{x:100,y:148},{x:400,y:148},{x:55,y:262},{x:250,y:240},{x:445,y:262},{x:55,y:374},{x:250,y:356},{x:445,y:374},{x:100,y:474},{x:400,y:474}],exitNode:0,penguins:[2,5,8],monkey:10,edges:[[0,1],[0,2],[1,3],[1,4],[2,4],[2,5],[3,6],[4,7],[5,8],[6,7],[7,8],[6,9],[8,10],[9,10],[7,10],[3,5]]},{nodes:[{x:250,y:38},{x:100,y:138},{x:400,y:138},{x:55,y:248},{x:250,y:228},{x:445,y:248},{x:55,y:355},{x:210,y:332},{x:390,y:355},{x:55,y:455},{x:390,y:455},{x:210,y:475}],exitNode:0,penguins:[2,5,8],monkey:11,edges:[[0,1],[0,2],[1,3],[1,4],[2,4],[2,5],[3,6],[4,7],[5,8],[6,7],[7,8],[6,9],[8,10],[9,10],[7,10],[3,9],[5,10],[9,11],[10,11]]}
+  {nodes:[{x:250,y:55},{x:110,y:180},{x:390,y:180},{x:250,y:295},{x:110,y:430},{x:390,y:430}],exitNode:0,penguins:[3],monkey:5,edges:[[0,1],[0,2],[1,3],[2,3],[3,4],[4,5],[2,5]]},
+  {nodes:[{x:250,y:50},{x:110,y:175},{x:390,y:175},{x:110,y:320},{x:390,y:320},{x:110,y:465},{x:390,y:465}],exitNode:0,penguins:[4],monkey:5,edges:[[0,1],[0,2],[1,3],[2,4],[3,4],[3,5],[4,6],[5,6]]},
+  {nodes:[{x:250,y:45},{x:115,y:160},{x:390,y:155},{x:115,y:290},{x:390,y:290},{x:250,y:275},{x:115,y:415},{x:390,y:415}],exitNode:0,penguins:[3,4],monkey:7,edges:[[0,1],[1,2],[2,3],[3,4],[4,5],[5,6],[6,7],[1,5],[2,4],[3,7]]},
+  {nodes:[{x:250,y:50},{x:105,y:170},{x:395,y:170},{x:105,y:300},{x:250,y:275},{x:395,y:300},{x:105,y:430},{x:395,y:430}],exitNode:0,penguins:[2,5],monkey:7,edges:[[0,1],[0,2],[1,3],[1,4],[2,4],[2,5],[3,4],[4,5],[3,6],[5,7],[6,7],[4,7],[4,6]]},
+  {nodes:[{x:250,y:45},{x:105,y:165},{x:395,y:165},{x:105,y:295},{x:250,y:270},{x:395,y:295},{x:105,y:420},{x:395,y:420},{x:250,y:475}],exitNode:0,penguins:[2,5],monkey:8,edges:[[0,1],[0,2],[1,3],[1,4],[2,4],[2,5],[3,4],[4,5],[3,6],[5,7],[6,7],[4,8],[6,8],[7,8],[1,5]]},
+  {nodes:[{x:250,y:40},{x:100,y:155},{x:400,y:155},{x:55,y:275},{x:250,y:250},{x:445,y:275},{x:55,y:390},{x:250,y:370},{x:445,y:390}],exitNode:0,penguins:[3,5],monkey:8,edges:[[0,1],[0,2],[1,3],[2,4],[3,5],[4,5],[5,6],[5,7],[6,8],[7,8],[1,5],[2,6],[3,7]]},
+  {nodes:[{x:250,y:40},{x:105,y:150},{x:395,y:150},{x:60,y:270},{x:250,y:245},{x:440,y:270},{x:105,y:375},{x:395,y:375},{x:105,y:475},{x:395,y:475}],exitNode:0,penguins:[4,7],monkey:9,edges:[[0,1],[0,2],[1,3],[1,4],[2,4],[2,5],[3,6],[4,6],[4,7],[5,7],[3,8],[6,8],[7,9],[5,9],[8,9],[6,9]]},
+  {nodes:[{x:250,y:40},{x:100,y:155},{x:400,y:155},{x:55,y:275},{x:250,y:250},{x:445,y:275},{x:55,y:390},{x:250,y:370},{x:445,y:390},{x:250,y:480}],exitNode:0,penguins:[1,4,8],monkey:9,edges:[[0,1],[0,2],[1,3],[2,4],[3,4],[3,5],[4,6],[5,7],[6,7],[5,8],[6,9],[7,9],[8,9],[2,6]]},
+  {nodes:[{x:250,y:38},{x:100,y:148},{x:400,y:148},{x:55,y:262},{x:250,y:240},{x:445,y:262},{x:55,y:374},{x:250,y:356},{x:445,y:374},{x:100,y:474},{x:400,y:474}],exitNode:0,penguins:[2,6,9],monkey:10,edges:[[0,1],[0,2],[1,3],[2,4],[3,4],[3,5],[4,6],[5,7],[6,8],[7,8],[7,9],[8,10],[9,10],[5,9],[4,8]]},
+  {nodes:[{x:250,y:38},{x:100,y:138},{x:400,y:138},{x:55,y:248},{x:250,y:228},{x:445,y:248},{x:55,y:355},{x:210,y:332},{x:390,y:355},{x:55,y:455},{x:390,y:455},{x:210,y:475}],exitNode:0,penguins:[2,5,8],monkey:11,edges:[[0,1],[0,2],[1,3],[1,4],[2,4],[2,5],[3,6],[4,7],[5,8],[6,7],[7,8],[6,9],[8,10],[9,10],[7,10],[3,9],[5,10],[9,11],[10,11]]}
 ];
 const levelPar=[4,5,6,7,8,8,9,10,11,12];
 
@@ -126,7 +135,7 @@ function goNextLevel(){document.getElementById('winOverlay').classList.remove('s
 const canvas=document.getElementById('gameCanvas');
 const ctx=canvas.getContext('2d');
 let particles=[];
-let cur=0,state=null,adj=[],phase='player',moves=0;
+let cur=0,state=null,adj=[],phase='player',moves=0,penguinTurnCounter=0;
 
 function buildAdj(edges,n){const a=Array.from({length:n},()=>[]);for(const[u,v]of edges){a[u].push(v);a[v].push(u);}return a;}
 
@@ -135,7 +144,7 @@ function init(idx){
   const lv=levels[idx];
   adj=buildAdj(lv.edges,lv.nodes.length);
   state={penguins:[...lv.penguins],monkey:lv.monkey};
-  phase='player';moves=0;
+  phase='player';moves=0;penguinTurnCounter=0;
   document.getElementById('moveCounter').textContent='手数: 0';
   document.getElementById('levelInfo').textContent='レベル '+(idx+1)+' / 10';
   document.getElementById('progressFill').style.width=Math.round((idx+1)/10*100)+'%';
@@ -214,25 +223,34 @@ function bfsDist(start,goal,blocked){
   return{dist:999,next:start};
 }
 
+// ペンギンは3ターンに1回だけ動く（プレイヤーに有利）
+const PENGUIN_MOVE_EVERY = 3;
+
 function doPenguinMove(){
   if(phase!=='player')return;
+  penguinTurnCounter++;
+  const willMove = (penguinTurnCounter % PENGUIN_MOVE_EVERY === 0);
+  if(!willMove){
+    // ペンギンは今ターン動かない
+    const remaining = PENGUIN_MOVE_EVERY - (penguinTurnCounter % PENGUIN_MOVE_EVERY);
+    document.getElementById('message').textContent='お猿をタップして移動！あと'+remaining+'手でペンギンが動く！';
+    render();
+    return;
+  }
   phase='ai';
   render();
   setTimeout(()=>{
     const lv=levels[cur];
     const newPos=[...state.penguins];
-    // Move each penguin one at a time toward monkey
     for(let i=0;i<newPos.length;i++){
       const others=new Set(newPos.filter((_,j)=>j!==i));
       const r=bfsDist(newPos[i],state.monkey,others);
-      // Move to next step (but don't land on other penguins)
       if(r.next!==newPos[i]&&!new Set(newPos).has(r.next)){
         newPos[i]=r.next;
       }
     }
     state.penguins=newPos;
     render();
-    // Check if monkey caught
     if(state.penguins.includes(state.monkey)){
       phase='lost';render();onCaught();return;
     }
