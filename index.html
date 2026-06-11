@@ -7,7 +7,20 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:linear-gradient(135deg,#1a1a2e,#16213e,#0f3460);display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;font-family:'Helvetica Neue',Arial,sans-serif;color:white;user-select:none;padding:10px;-webkit-tap-highlight-color:transparent;overflow-x:hidden}
-h1{font-size:22px;margin-bottom:4px;text-shadow:0 0 20px #7ecfff;letter-spacing:2px}
+/* ===== TITLE SCREEN ===== */
+#titleScreen{display:flex;flex-direction:column;align-items:center;width:100%;max-width:500px}
+#titleScreen h1{font-size:26px;margin-bottom:4px;text-shadow:0 0 20px #7ecfff;letter-spacing:2px;text-align:center}
+#titleScreen .subtitle{font-size:13px;color:#94a3b8;margin-bottom:16px}
+#levelGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;width:100%;padding:4px}
+.lvl-btn{aspect-ratio:1;border-radius:14px;border:none;font-size:18px;font-weight:bold;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:transform 0.12s;touch-action:manipulation;-webkit-appearance:none;position:relative}
+.lvl-btn.unlocked{background:linear-gradient(135deg,#0ea5e9,#0284c7);color:white;box-shadow:0 4px 14px rgba(14,165,233,0.5)}
+.lvl-btn.cleared{background:linear-gradient(135deg,#f59e0b,#d97706);color:white;box-shadow:0 4px 14px rgba(245,158,11,0.5)}
+.lvl-btn.locked{background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.3);cursor:default}
+.lvl-btn.unlocked:active,.lvl-btn.cleared:active{transform:scale(0.93)}
+.lvl-star{font-size:11px;margin-top:1px}
+.title-music-btn{margin-top:14px;padding:10px 24px;font-size:14px;font-weight:bold;background:linear-gradient(135deg,#22c55e,#16a34a);color:white;border:none;border-radius:10px;cursor:pointer;touch-action:manipulation;-webkit-appearance:none}
+/* ===== GAME SCREEN ===== */
+#gameScreen{display:none;flex-direction:column;align-items:center;width:100%}
 #topRow{display:flex;align-items:center;gap:16px;margin-bottom:3px}
 #levelInfo{font-size:15px;color:#ffd700;font-weight:bold}
 #stars{font-size:14px;color:#ffd700;letter-spacing:1px}
@@ -18,25 +31,51 @@ button{padding:12px 20px;font-size:15px;font-weight:bold;background:linear-gradi
 button:hover{transform:translateY(-2px)}
 button.blue{background:linear-gradient(135deg,#0ea5e9,#0284c7);box-shadow:0 4px 12px rgba(14,165,233,0.4)}
 button.green{background:linear-gradient(135deg,#22c55e,#16a34a);box-shadow:0 4px 12px rgba(34,197,94,0.4)}
-#progressBar{width:min(500px,96vw);height:7px;background:rgba(255,255,255,0.15);border-radius:4px;margin-bottom:3px;overflow:hidden}
-#progressFill{height:100%;background:linear-gradient(90deg,#0ea5e9,#ffd700);border-radius:4px;transition:width 0.4s}
+button.gold{background:linear-gradient(135deg,#f59e0b,#d97706);box-shadow:0 4px 12px rgba(245,158,11,0.4)}
 #legend{display:flex;gap:14px;margin-top:7px;font-size:12px;color:#94a3b8;flex-wrap:wrap;justify-content:center}
-#musicBtn{position:relative}
+/* win overlay */
+#winOverlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:100;flex-direction:column;align-items:center;justify-content:center;gap:16px}
+#winOverlay.show{display:flex}
+#winBox{background:linear-gradient(135deg,#1e3a5f,#0f2744);border:2px solid #ffd700;border-radius:24px;padding:32px 40px;text-align:center;max-width:320px}
+#winBox h2{font-size:28px;color:#ffd700;margin-bottom:8px}
+#winBox p{color:#a5f3fc;margin-bottom:20px;font-size:15px}
+.win-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
 </style>
 </head>
 <body>
-<h1>🐧 ペンギン警察 X-CLASH 🐒</h1>
-<div id="topRow"><div id="levelInfo">レベル 1 / 20</div><div id="stars">★</div></div>
-<div id="progressBar"><div id="progressFill" style="width:5%"></div></div>
-<div id="message">ペンギンをクリックして移動させよう！</div>
-<canvas id="gameCanvas" width="500" height="530"></canvas>
-<div class="btn-row">
-  <button onclick="resetLevel()">🔄 リスタート</button>
-  <button class="blue" onclick="prevLevel()">◀ 前</button>
-  <button class="blue" onclick="nextLevel()">次 ▶</button>
-  <button class="green" id="musicBtn" onclick="toggleMusic()">🎵 音楽ON</button>
+
+<!-- タイトル画面 -->
+<div id="titleScreen">
+  <h1>🐧 ペンギン警察 X-CLASH 🐒</h1>
+  <div class="subtitle">ペンギンでお猿を包囲しよう！</div>
+  <div id="levelGrid"></div>
+  <button class="title-music-btn" id="titleMusicBtn" onclick="toggleMusic()">🎵 音楽ON</button>
 </div>
-<div id="legend"><span>🐧 警察（あなたが操作）</span><span>🐒 逃走犯（AI）</span><span>🟠 EXIT = 逃走犯の目的地</span></div>
+
+<!-- ゲーム画面 -->
+<div id="gameScreen">
+  <div id="topRow"><div id="levelInfo">レベル 1 / 20</div><div id="stars">★</div></div>
+  <div id="message">ペンギンをタップして移動！</div>
+  <canvas id="gameCanvas" width="500" height="530"></canvas>
+  <div class="btn-row">
+    <button onclick="resetLevel()">🔄 リスタート</button>
+    <button class="blue" onclick="showTitle()">🏠 ホーム</button>
+    <button class="green" id="musicBtn" onclick="toggleMusic()">🎵 音楽ON</button>
+  </div>
+  <div id="legend"><span>🐧 警察（操作）</span><span>🐒 逃走犯（AI）</span><span>🟠 EXIT</span></div>
+</div>
+
+<!-- クリア演出 -->
+<div id="winOverlay">
+  <div id="winBox">
+    <h2>🎉 クリア！</h2>
+    <p id="winMsg">レベル1 クリア！</p>
+    <div class="win-btns">
+      <button onclick="showTitle()" style="background:linear-gradient(135deg,#6366f1,#4f46e5)">🏠 ホーム</button>
+      <button id="nextLvlBtn" class="gold" onclick="goNextLevel()">次のレベル ▶</button>
+    </div>
+  </div>
+</div>
 
 <script>
 // ==================== ジョージ画像
@@ -146,14 +185,16 @@ function stopBGM(){
 }
 
 function toggleMusic(){
-  const btn=document.getElementById('musicBtn');
-  if(!musicOn){
-    musicOn=true; btn.textContent='🔇 音楽OFF'; btn.style.background='linear-gradient(135deg,#f59e0b,#d97706)';
-    startBGM();
-  }else{
-    musicOn=false; btn.textContent='🎵 音楽ON'; btn.style.background='';
-    stopBGM();
-  }
+  const syncBtns=(on)=>{
+    ['musicBtn','titleMusicBtn'].forEach(id=>{
+      const b=document.getElementById(id);
+      if(!b)return;
+      b.textContent=on?'🔇 音楽OFF':'🎵 音楽ON';
+      b.style.background=on?'linear-gradient(135deg,#f59e0b,#d97706)':'';
+    });
+  };
+  if(!musicOn){musicOn=true;syncBtns(true);startBGM();}
+  else{musicOn=false;syncBtns(false);stopBGM();}
 }
 
 // --- 効果音 ---
@@ -231,6 +272,39 @@ function playMonkeyMoveSound(){
 // ==================== ゲームロジック ====================
 const canvas=document.getElementById('gameCanvas');
 const ctx=canvas.getContext('2d');
+// ===== 進行管理 =====
+let maxUnlocked = parseInt(localStorage.getItem('pxclash_max')||'0');
+let cleared = JSON.parse(localStorage.getItem('pxclash_cleared')||'[]');
+function saveProgress(){localStorage.setItem('pxclash_max',maxUnlocked);localStorage.setItem('pxclash_cleared',JSON.stringify(cleared));}
+
+function showTitle(){
+  document.getElementById('titleScreen').style.display='flex';
+  document.getElementById('gameScreen').style.display='none';
+  document.getElementById('winOverlay').classList.remove('show');
+  buildGrid();
+}
+function showGame(idx){
+  document.getElementById('titleScreen').style.display='none';
+  document.getElementById('gameScreen').style.display='flex';
+  init(idx);
+}
+function buildGrid(){
+  const grid=document.getElementById('levelGrid');
+  grid.innerHTML='';
+  for(let i=0;i<20;i++){
+    const btn=document.createElement('button');
+    btn.className='lvl-btn '+(cleared.includes(i)?'cleared':i<=maxUnlocked?'unlocked':'locked');
+    const star=cleared.includes(i)?'⭐':'';
+    btn.innerHTML=`<span>${i+1}</span><span class="lvl-star">${star}</span>`;
+    if(i<=maxUnlocked){btn.onclick=(()=>{const n=i;return()=>showGame(n);})();}
+    grid.appendChild(btn);
+  }
+}
+function goNextLevel(){
+  document.getElementById('winOverlay').classList.remove('show');
+  if(cur<19)showGame(cur+1);else showTitle();
+}
+
 let cur=0,state=null,sel=null,adj=[],phase='player';
 
 function buildAdj(edges,n){const a=Array.from({length:n},()=>[]);for(const[u,v]of edges){a[u].push(v);a[v].push(u);}return a;}
@@ -246,9 +320,16 @@ function init(idx){
   document.getElementById('message').textContent='ペンギンをクリックして移動させよう！';
   render();
 }
+function onClear(){
+  if(!cleared.includes(cur))cleared.push(cur);
+  if(cur+1>maxUnlocked&&cur<19)maxUnlocked=cur+1;
+  saveProgress();
+  document.getElementById('winMsg').textContent='レベル'+(cur+1)+' クリア！🎉';
+  const nb=document.getElementById('nextLvlBtn');
+  nb.style.display=cur<19?'':'none';
+  setTimeout(()=>document.getElementById('winOverlay').classList.add('show'),400);
+}
 function resetLevel(){init(cur);}
-function prevLevel(){if(cur>0){cur--;init(cur);};}
-function nextLevel(){if(cur<19){cur++;init(cur);};}
 
 function drawMonkey(x,y){
   if(georgeImg.complete && georgeImg.naturalWidth>0){
@@ -274,7 +355,7 @@ function handleInput(clientX,clientY){
   if(sel!==null&&adj[sel].includes(c)&&!occ().has(c)){
     state.penguins[state.penguins.indexOf(sel)]=c;sel=null;
     playMoveSound();
-    if(win()){phase='won';render();document.getElementById('message').textContent='🎉 捕まえた！クリア！おめでとう！';playCaptureSound();return;}
+    if(win()){phase='won';render();playCaptureSound();onClear();return;}
     phase='monkey';render();setTimeout(doMonkeyMove,550);
   }else{sel=null;render();}
 }
@@ -287,13 +368,13 @@ function doMonkeyMove(){
   if(phase!=='monkey')return;
   const lv=levels[cur];const ps=new Set(state.penguins);
   const av=adj[state.monkey].filter(n=>!ps.has(n));
-  if(av.length===0){phase='won';render();document.getElementById('message').textContent='🎉 捕まえた！クリア！おめでとう！';playCaptureSound();return;}
+  if(av.length===0){phase='won';render();playCaptureSound();onClear();return;}
   let best=av[0],bd=Infinity;
   for(const m of av){const d=bfs(m,lv.exitNode,ps);if(d<bd){bd=d;best=m;}}
   state.monkey=best;
   playMonkeyMoveSound();
   if(best===lv.exitNode){phase='lost';render();document.getElementById('message').textContent='😱 逃げられた！もう一度挑戦！';playEscapeSound();return;}
-  if(win()){phase='won';render();document.getElementById('message').textContent='🎉 捕まえた！クリア！おめでとう！';playCaptureSound();return;}
+  if(win()){phase='won';render();playCaptureSound();onClear();return;}
   phase='player';render();
 }
 
@@ -334,7 +415,7 @@ function render(){
   if(phase==='won'){ctx.fillStyle='rgba(0,220,100,0.12)';ctx.beginPath();ctx.roundRect(0,0,canvas.width,canvas.height,16);ctx.fill();}
   if(phase==='lost'){ctx.fillStyle='rgba(220,0,50,0.12)';ctx.beginPath();ctx.roundRect(0,0,canvas.width,canvas.height,16);ctx.fill();}
 }
-init(0);
+showTitle();
 </script>
 </body>
 </html>
